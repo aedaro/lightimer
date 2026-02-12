@@ -1,40 +1,39 @@
 ## Lightimer
-A handy countdown timer for mastering time management in [LightingTalks](https://inside-docupedia.bosch.com/confluence/display/BEGSC/Lightning+Talks) or other short presentations. It works for Linux and Windows.
+A handy countdown timer for mastering time management in [LightingTalks](https://en.wikipedia.org/wiki/Lightning_talk) or other short presentations. It works for Linux and Windows.
 
 ### Set up environment
 First, clone the *lightimer* repo into your favorite directory.
 
-Next, in order to make it work, we need to setup the environment. All necessary modules are defined in the environment.yml file. First install *Miniconda* (Anaconda) from the [website](https://docs.conda.io/en/latest/miniconda.html) for your system (e.g. Linux):
+Next, install [uv](https://docs.astral.sh/uv/getting-started/installation/) — a fast Python package manager:
 ```
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+# Linux / macOS
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-Reopen your bash and install the environment
+Then install the project and its dependencies:
 ```
 cd <path/to/lightimer>
-conda env create -f environment.yml
+uv sync
 ```
 
-and activate it
+Now you're good to go. Run the lightimer:
 ```
-conda activate lightimer
-```
-
-Now, if everything is set up you should see the environment name *(lightimer)* before your regular prompt. Finally, you're good to go. Go ahead and run your lightimer:
-```
-python main.py
+uv run python main.py
 ```
 
 If a green narrow window can be seen on the right side of your screen... Congratulations! You successfully run the lightimer.
 
 To build a single file binary out of the source code do the following:
 ```
-pyinstaller lightimer.spec
+uv run pyinstaller lightimer.spec
 ```
 
 or you can specify all parameters for the *pyinstaller* manually:
 ```
-pyinstaller --onefile --icon lightimer.ico --add-data "sound/timesup.wav:sound/" --name lightimer main.py
+uv run pyinstaller --onefile --icon lightimer.ico --add-data "sound/timesup.wav:sound/" --name lightimer main.py
 ```
 
 and find the newly installed binary file `lightimer` within the `dist/` folder.

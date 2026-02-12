@@ -1,0 +1,18 @@
+[project]
+name = "lightimer"
+version = "1.0.0"
+description = "A lightweight countdown timer for presentations"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydub>=0.25.1",
+]
+
+[project.scripts]
+lightimer = "main:main"
+
+[tool.uv]
+dev-dependencies = [
+    "pyinstaller>=6.0",
+    "pytest>=8.0",
+]
