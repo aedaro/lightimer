@@ -20,7 +20,7 @@ TIME_COLOR: str = "#777777"
 
 # ── Timing ───────────────────────────────────────────────────────────
 INIT_DURATION_S: int = 300  # 5 minutes
-REFRESH_CYCLE_MS: int = 16  # ~60 fps
+REFRESH_CYCLE_MS: int = 8  # ~120 fps
 
 # ── Font ─────────────────────────────────────────────────────────────
 TIME_FONT: tuple[str, int] = ("Helvetica", 24)

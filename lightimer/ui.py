@@ -137,6 +137,9 @@ class LightimerApp(tk.Frame):
             self, width=w, height=h, bd=0, bg=BG_COLOR, **highlight_opts
         )
         self.level = self.canvas.create_rectangle(0, 0, w, h, fill=LEVEL_COLOR, width=0)
+        self.lead_line = self.canvas.create_rectangle(
+            0, 0, w, 1, fill=LEVEL_COLOR, width=0
+        )
 
         gap = _TEXT_GAP.get(sys.platform, WIN_GAP)
         self.text = self.canvas.create_text(
@@ -172,12 +175,34 @@ class LightimerApp(tk.Frame):
         w, h = _DIMENSIONS[orient]
         self.canvas.config(width=w, height=h)
 
-    def _redraw_level(self, level: float) -> None:
+    def _redraw_level(self, level: float, color: str) -> None:
+        """Redraw the level bar with sub-pixel fade for smooth motion.
+
+        A 1 px leading-edge line is drawn at the boundary between the
+        black background and the coloured rectangle.  Its colour is
+        interpolated between *color* and black according to the
+        fractional pixel position, so the bar appears to glide smoothly
+        rather than jumping whole pixels.
+        """
         w, h = _DIMENSIONS[self.orientation]
+        pixel_pos = int(level)
+        frac = level - pixel_pos
+
         if self.orientation is Orientation.VERTICAL:
-            self.canvas.coords(self.level, 0, level, w, h)
+            self.canvas.coords(self.level, 0, pixel_pos + 1, w, h)
+            self.canvas.coords(self.lead_line, 0, pixel_pos, w, pixel_pos + 1)
         else:
-            self.canvas.coords(self.level, level, 0, w, h)
+            self.canvas.coords(self.level, pixel_pos + 1, 0, w, h)
+            self.canvas.coords(self.lead_line, pixel_pos, 0, pixel_pos + 1, h)
+
+        # Fade the leading-edge line: full colour at frac=0 → black at frac≈1
+        fade = 1.0 - frac
+        r = int(int(color[1:3], 16) * fade)
+        g = int(int(color[3:5], 16) * fade)
+        b = int(int(color[5:7], 16) * fade)
+
+        self.canvas.itemconfig(self.level, fill=color)
+        self.canvas.itemconfig(self.lead_line, fill=f"#{r:02x}{g:02x}{b:02x}")
 
     # ── event handlers ────────────────────────────────────────────────
 
@@ -236,9 +261,7 @@ class LightimerApp(tk.Frame):
         self._config_canvas_for(self.orientation)
         self.redraw_canvas()
         if self._cstate != 0:
-            self.canvas.itemconfig(
-                self.text, text="%s%s:%s%s" % tuple(self._cdigits)
-            )
+            self.canvas.itemconfig(self.text, text="%s%s:%s%s" % tuple(self._cdigits))
 
     def _on_click(self, event: tk.Event) -> None:
         if self.timer.is_time_up():
@@ -274,9 +297,7 @@ class LightimerApp(tk.Frame):
         if self.timer.is_running:
             self.timer.stop()
         self._apply_digit(self._cstate, event.char)
-        self.canvas.itemconfig(
-            self.text, text="%s%s:%s%s" % tuple(self._cdigits)
-        )
+        self.canvas.itemconfig(self.text, text="%s%s:%s%s" % tuple(self._cdigits))
         self.timer.set(self.duration)
 
     # ── drawing ───────────────────────────────────────────────────────
@@ -285,7 +306,8 @@ class LightimerApp(tk.Frame):
         """Update the level bar, colour, and remaining-time label."""
         if self.duration == 0 or self.timer.is_time_up():
             self.canvas.itemconfig(self.level, fill="black")
-            self.canvas.update()
+            self.canvas.itemconfig(self.lead_line, fill="black")
+            self.canvas.update_idletasks()
             return
 
         half = self.duration / 2
@@ -297,15 +319,15 @@ class LightimerApp(tk.Frame):
 
         level_size = _LEVEL_AXIS[self.orientation]
         level = (elapsed * level_size) / self.duration
-        self._redraw_level(level)
+        color = f"#{red:02x}{green:02x}00"
+        self._redraw_level(level, color)
 
-        self.canvas.itemconfig(self.level, fill=f"#{red:02x}{green:02x}00")
         self.canvas.itemconfig(
             self.text,
             text=self.timer.format(remaining),
             fill=TIME_COLOR,
         )
-        self.canvas.update()
+        self.canvas.update_idletasks()
 
     # ── digit entry ───────────────────────────────────────────────────
 
