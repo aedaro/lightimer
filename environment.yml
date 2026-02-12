@@ -1,0 +1,43 @@
+name: lightimer
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=main
+  - altgraph=0.17=py_0
+  - bzip2=1.0.8=h7b6447c_0
+  - ca-certificates=2020.1.1=0
+  - certifi=2020.4.5.1=py37_0
+  - ffmpeg=4.2.2=h20bf706_0
+  - freetype=2.9.1=h8a8886c_1
+  - gmp=6.1.2=h6c8ec71_1
+  - gnutls=3.6.5=h71b1129_1002
+  - lame=3.100=h7b6447c_0
+  - ld_impl_linux-64=2.33.1=h53a641e_7
+  - libedit=3.1.20181209=hc058e9b_0
+  - libffi=3.2.1=hd88cf55_4
+  - libgcc-ng=9.1.0=hdf63c60_0
+  - libopus=1.3.1=h7b6447c_0
+  - libpng=1.6.37=hbc83047_0
+  - libstdcxx-ng=9.1.0=hdf63c60_0
+  - libvpx=1.7.0=h439df22_0
+  - macholib=1.11=py_0
+  - ncurses=6.2=he6710b0_0
+  - nettle=3.4.1=hbb512f6_0
+  - openh264=2.1.0=hd408876_0
+  - openssl=1.1.1g=h7b6447c_0
+  - pip=20.0.2=py37_1
+  - pycrypto=2.6.1=py37h14c3975_9
+  - pydub=0.23.1=py_0
+  - pyinstaller=3.5=py37hbc83047_0
+  - python=3.7.7=hcf32534_0_cpython
+  - python_abi=3.7=1_cp37m
+  - readline=8.0=h7b6447c_0
+  - setuptools=46.1.3=py37_0
+  - sqlite=3.31.1=h62c20be_1
+  - tk=8.6.8=hbc83047_0
+  - wheel=0.34.2=py37_0
+  - x264=1!157.20191217=h7b6447c_0
+  - xz=5.2.5=h7b6447c_0
+  - zlib=1.2.11=h7b6447c_3
+
