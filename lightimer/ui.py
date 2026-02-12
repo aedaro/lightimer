@@ -6,7 +6,6 @@ import logging
 import os
 import sys
 import tkinter as tk
-from typing import Callable
 
 from lightimer.config import (
     BG_COLOR,
