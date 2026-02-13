@@ -43,3 +43,9 @@ For changing the duration time, just start typing numbers. Duration time (digita
 While time is running, the level bar decreases relatively with the elapsed time and changes color from green to red, to give a visual impression on the remaining time. Once time is up, the level bar decreased completely and a notification sound is played. Digits on the clock turn red. The timer can be reset and used again.
 
 Have fun!
+
+### License
+
+This project is licensed under MIT License - see the [LICENSE](LICENSE) file.
+
+Third-party licenses are in the [LICENSES](LICENSES/) directory.
