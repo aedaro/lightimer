@@ -64,6 +64,5 @@ class StaticTimer:
     @staticmethod
     def format(remaining: float) -> str:
         """Format *remaining* seconds as ``MM:SS``."""
-        minutes = int(remaining / 60)
-        seconds = int(remaining) - minutes * 60
+        minutes, seconds = divmod(int(remaining), 60)
         return f"{minutes:02d}:{seconds:02d}"
