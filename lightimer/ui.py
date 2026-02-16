@@ -54,10 +54,17 @@ class LightimerApp(tk.Frame):
 
     # ── construction ──────────────────────────────────────────────────
 
-    def __init__(self, master: tk.Tk, *, lean: bool = False) -> None:
+    def __init__(
+        self,
+        master: tk.Tk,
+        *,
+        lean: bool = False,
+        sound_file: str | None = None,
+    ) -> None:
         super().__init__(master)
         self.master: tk.Tk = master
         self.lean = lean
+        self.sound_file = sound_file
 
         self._configure_window()
 
@@ -369,7 +376,10 @@ class LightimerApp(tk.Frame):
     # ── notifications ─────────────────────────────────────────────────
 
     def _notify_timesup(self) -> None:
-        play_notification()
+        if self.sound_file:
+            play_notification(self.sound_file)
+        else:
+            play_notification()
         self.canvas.itemconfig(self.text, fill="red")
 
 
