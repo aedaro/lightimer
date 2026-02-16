@@ -19,7 +19,7 @@ def _parse_args(argv: list[str]) -> argparse.Namespace:
         "-s",
         "--sound-file",
         dest="sound_file",
-        help="path to a WAV file used for the times-up notification",
+        help="path to a WAV or MP3 file used for the times-up notification",
     )
     return parser.parse_args(argv)
 

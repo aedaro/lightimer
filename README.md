@@ -34,7 +34,7 @@ and find the newly installed binary file `lightimer` (`lightimer.exe` on Windows
 pyinstaller --onefile --noconsole --icon lightimer.ico --name lightimer main.py --add-data "sound/timesup.wav;sound/")
 
 ### How to use the Lightimer
-Using the Lightimer is pretty simple and straight forward. Run it from command line with `./lightimer(.exe)`. You can start it in lean mode with the argument `-l` (lowercase "L") or `--lean`. You can also provide a custom notification sound via `-s <path/to/file.wav>` or `--sound-file <path/to/file.wav>`. If no sound file is provided, Lightimer uses the default bundled sound file. Once the Lightimer is up and running, you can right-click (`Spacebar`) to start or stop the timer. Double-right-click (`Enter`) resets the timer and it can be started anew.
+Using the Lightimer is pretty simple and straight forward. Run it from command line with `./lightimer(.exe)`. You can start it in lean mode with the argument `-l` (lowercase "L") or `--lean`. You can also provide a custom notification sound via `-s <path/to/file.wav|mp3>` or `--sound-file <path/to/file.wav|mp3>`. If no sound file is provided, Lightimer uses the default bundled sound file. Once the Lightimer is up and running, you can right-click (`Spacebar`) to start or stop the timer. Double-right-click (`Enter`) resets the timer and it can be started anew.
 
 To toggle between vertical and horizontal type `t`. Hit `l` (lowercase "L") to change into seamless (light) mode (works only in Windows). To move window, go left-click and drag. To quit, hit `Esc`.
 
