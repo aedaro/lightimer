@@ -18,18 +18,18 @@ def _resource_path(relative_path: str) -> str:
     return os.path.join(base_path, relative_path)
 
 
-def _play_linux() -> None:
+def _play_linux(sound_path: str) -> None:
     from pydub import AudioSegment
     from pydub.playback import play
 
-    sound = AudioSegment.from_wav(_resource_path(SOUND_PATH))
+    sound = AudioSegment.from_wav(_resource_path(sound_path))
     play(sound)
 
 
-def _play_win() -> None:
+def _play_win(sound_path: str) -> None:
     import winsound  # type: ignore[import-not-found]
 
-    winsound.PlaySound(_resource_path(SOUND_PATH), winsound.SND_FILENAME)
+    winsound.PlaySound(_resource_path(sound_path), winsound.SND_FILENAME)
 
 
 _PLATFORM_PLAYER: dict[str, callable] = {
@@ -38,10 +38,10 @@ _PLATFORM_PLAYER: dict[str, callable] = {
 }
 
 
-def play_notification() -> None:
+def play_notification(sound_path: str = SOUND_PATH) -> None:
     """Play the *timesup* notification sound in a background thread."""
     player = _PLATFORM_PLAYER.get(sys.platform)
     if player is None:
         logger.warning("No sound player available for platform %s", sys.platform)
         return
-    threading.Thread(target=player, daemon=True).start()
+    threading.Thread(target=player, args=(sound_path,), daemon=True).start()
