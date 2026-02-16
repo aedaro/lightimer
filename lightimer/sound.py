@@ -3,19 +3,13 @@
 from __future__ import annotations
 
 import logging
-import os
 import sys
 import threading
 
 from lightimer.config import SOUND_PATH
+from lightimer.utils import resource_path
 
 logger = logging.getLogger(__name__)
-
-
-def _resource_path(relative_path: str) -> str:
-    """Resolve *relative_path* inside a PyInstaller bundle or the project root."""
-    base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
-    return os.path.join(base_path, relative_path)
 
 
 def _play_with_pygame(sound_path: str) -> None:
@@ -24,7 +18,7 @@ def _play_with_pygame(sound_path: str) -> None:
     if not pygame.mixer.get_init():
         pygame.mixer.init()
 
-    pygame.mixer.music.load(_resource_path(sound_path))
+    pygame.mixer.music.load(resource_path(sound_path))
     pygame.mixer.music.play()
 
 

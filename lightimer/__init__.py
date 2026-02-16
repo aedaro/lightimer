@@ -11,11 +11,14 @@ from lightimer.config import (
 from lightimer.timer import StaticTimer
 from lightimer.sound import play_notification
 from lightimer.ui import LightimerApp
+from lightimer.utils import interpolate_color, resource_path
 
 __all__ = [
     "LightimerApp",
     "StaticTimer",
     "play_notification",
+    "interpolate_color",
+    "resource_path",
     "INIT_DURATION_S",
     "REFRESH_CYCLE_MS",
     "BG_COLOR",

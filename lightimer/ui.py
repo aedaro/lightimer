@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-import os
 import sys
 import tkinter as tk
 
@@ -23,9 +22,12 @@ from lightimer.config import (
     WIDTH_H,
     WIDTH_V,
     WIN_GAP,
+    WIN_OFFSET_X,
+    WIN_OFFSET_Y,
 )
 from lightimer.sound import play_notification
 from lightimer.timer import StaticTimer
+from lightimer.utils import interpolate_color, resource_path
 
 logger = logging.getLogger(__name__)
 
@@ -81,14 +83,14 @@ class LightimerApp(tk.Frame):
             Orientation.VERTICAL: [
                 WIDTH_V,
                 HEIGHT_V,
-                sw - (WIDTH_V + 25),
+                sw - (WIDTH_V + WIN_OFFSET_X),
                 sh // 2 - HEIGHT_V // 2,
             ],
             Orientation.HORIZONTAL: [
                 WIDTH_H,
                 HEIGHT_H,
                 sw - 3 * WIDTH_H // 2,
-                sh - (HEIGHT_H + 40),
+                sh - (HEIGHT_H + WIN_OFFSET_Y),
             ],
         }
         self._apply_geometry()
@@ -106,7 +108,7 @@ class LightimerApp(tk.Frame):
 
     def _configure_window(self) -> None:
         self.master.title("Lightimer")
-        icon = tk.PhotoImage(file=_resource_path(ICON_PATH))
+        icon = tk.PhotoImage(file=resource_path(ICON_PATH))
         self._icon_ref = icon  # prevent GC
         self.master.call("wm", "iconphoto", self.master._w, icon)
         self.master.attributes("-topmost", True)
@@ -202,13 +204,10 @@ class LightimerApp(tk.Frame):
             self.canvas.coords(self.lead_line, pixel_pos, 0, pixel_pos + 1, h)
 
         # Fade the leading-edge line: full colour at frac=0 → black at frac≈1
-        fade = 1.0 - frac
-        r = int(int(color[1:3], 16) * fade)
-        g = int(int(color[3:5], 16) * fade)
-        b = int(int(color[5:7], 16) * fade)
+        faded_color = interpolate_color(color, frac)
 
         self.canvas.itemconfig(self.level, fill=color)
-        self.canvas.itemconfig(self.lead_line, fill=f"#{r:02x}{g:02x}{b:02x}")
+        self.canvas.itemconfig(self.lead_line, fill=faded_color)
 
     # ── event handlers ────────────────────────────────────────────────
 
@@ -384,12 +383,6 @@ class LightimerApp(tk.Frame):
 
 
 # ── module-level helpers ──────────────────────────────────────────────
-
-
-def _resource_path(relative_path: str) -> str:
-    """Resolve *relative_path* inside a PyInstaller bundle or the project root."""
-    base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
-    return os.path.join(base_path, relative_path)
 
 
 def _winpos_offset_add(pos: list[int], master: tk.Tk) -> None:

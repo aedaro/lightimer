@@ -29,6 +29,10 @@ TIME_FONT: tuple[str, int] = ("Helvetica", 24)
 SOUND_PATH: str = "sound/timesup.wav"
 ICON_PATH: str = "icon/lightimer.gif"
 
+# ── Window position offsets ───────────────────────────────────────────
+WIN_OFFSET_X: int = 25  # Horizontal offset from screen edge
+WIN_OFFSET_Y: int = 40  # Vertical offset from screen edge (taskbar)
+
 
 class Orientation(Enum):
     """Timer bar orientation."""
