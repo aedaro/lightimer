@@ -1,4 +1,4 @@
-"""Entry point for the Lightimer application."""
+"""A handy countdown timer for mastering time management in Lightning talks or other short presentations."""
 
 import argparse
 import sys
