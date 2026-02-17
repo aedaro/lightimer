@@ -47,5 +47,3 @@ Have fun!
 ### License
 
 This project is licensed under MIT License - see the [LICENSE](LICENSE) file.
-
-Third-party licenses are in the [LICENSES](LICENSES/) directory.
