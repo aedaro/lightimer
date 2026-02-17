@@ -1,6 +1,8 @@
 ## Lightimer
 A handy countdown timer for mastering time management in [Lightning talks](https://en.wikipedia.org/wiki/Lightning_talk) or other short presentations. It works for Linux, Windows and probably on Mac (not tested yet).
 
+![Lightimer](pix/lightimer.png)
+
 ### Set up environment
 First, install [python3-tk](https://docs.python.org/3/library/tkinter.html) and [uv](https://docs.astral.sh/uv/getting-started/installation/).
 Then, clone the __lightimer__ repo into your favorite directory and off you go:
